@@ -1,10 +1,34 @@
-boot_domain: boot.netboot.xyz
+boot_domain: 192.168.1.24:8081
+live_endpoint: http://192.168.1.24:8080
+generate_disks_hybrid: true
+time_server: cn.ntp.org.cn
+bootloader_https_enabled: false
+release_overrides:
+  archlinux:
+    mirror: "mirrors.ustc.edu.cn"
+  debian:
+    mirror: "http://mirrors.ustc.edu.cn"
+    base_dir: "debian"
+  fedora:
+    mirror: http://mirrors.ustc.edu.cn
+  # openEuler 在 163 的镜像才有提供
+  # 并且设置 base_dir 无效，因为脚本里拼接的时候没有用到 base_dir
+  # 因此只能设置 mirror
+  openEuler:
+    mirror: http://mirrors.163.com/openeuler
+  opensuse:
+    base_dir: opensuse/distribution/leap
+    mirror: http://mirrors.ustc.edu.cn
+  rockylinux:
+    mirror: "mirrors.ustc.edu.cn"
+    base_dir: "rocky"
+  ubuntu:
+    mirror: http://mirrors.ustc.edu.cn
 boot_timeout: 300000
 boot_version: 3.x
 bootloader_disks:
 - netboot.xyz
 bootloader_http_enabled: true
-bootloader_https_enabled: true
 bootloaders:
   arm:
   - desc: Used for CD/DVD, Virtual CDs, DRAC/iLO, VMware, Virtual Box
@@ -158,7 +182,6 @@ generate_checksums: true
 generate_disks: true
 generate_disks_arm: false
 generate_disks_efi: true
-generate_disks_hybrid: false
 generate_disks_legacy: true
 generate_disks_legacy_usb: true
 generate_disks_linux: false
@@ -179,7 +202,6 @@ ipxe_secureboot_archive_url: https://github.com/ipxe/ipxe/releases/download/{{ i
 ipxe_secureboot_version: v2.0.0
 ipxe_source_dir: /usr/src/ipxe
 kernel_params: initrd=initrd.magic ${cmdline}
-live_endpoint: https://github.com/netbootxyz
 make_num_jobs: 1
 memdisk_location: http://${boot_domain}/memdisk
 netbootxyz_conf_dir: /etc/netbootxyz
@@ -785,7 +807,6 @@ sigs_enabled: false
 sigs_location: http://${boot_domain}/sigs/
 sigs_menu: false
 site_name: netboot.xyz
-time_server: 0.pool.ntp.org
 utilitiesarm:
   memtest86:
     enabled: false
